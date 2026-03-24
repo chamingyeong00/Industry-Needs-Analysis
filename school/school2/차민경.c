@@ -36,17 +36,6 @@ void set_diff(t_student *student){
                      - student->distant[student->order[1]];
 }
 
-int get_min_diff(int student_diff[3])
-{
-    int min = 21474836;
-    for (int i = 0; i < 3; i++)
-    {
-        if (min > student_diff[i])
-            min = student_diff[i];
-    }
-    return min;
-}
-
 void swap(t_student *student1, t_student *student2)
 {
     t_student temp;
@@ -77,14 +66,14 @@ int choose_school(t_student *student, int school_count[3])
     int school;
 
     school = student->order[0];
-    if (school_count[school] < 3500)
+    if (check_school_max(school, school_count))
     {
         school_count[school]++;
         return school;
     }
 
     school = student->order[1];
-    if (school_count[school] < 3500)
+    if (check_school_max(school, school_count))
     {
         school_count[school]++;
         return school;
@@ -148,16 +137,9 @@ void run_contest(void)
         set_order(&student[people_index]);
         set_diff(&student[people_index]);
 
-        }
     }
     select_sort(student);
-
-
-    for (int people_index = 0; people_index < 10000; people_index++)
-    {
-        min_school_index = get_min_student_school(student[people_index].distant, school_count);
-        set_student_school(student[people_index].index, min_school_index);
-    }
+    choose_school(student, school_count);
 
     printf("total : %d\n", total);
     printf("school 0 : %d\n", school_count[0]);
