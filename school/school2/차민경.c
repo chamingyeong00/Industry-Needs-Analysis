@@ -62,23 +62,15 @@ int choose_school(t_student *student, int school_count[3])
 {
     int school_index;
 
-    school_index = student->order[0];
-    if (check_school_max(school_index, school_count))
+    for (int i = 0; i < 3; i++)
     {
-        school_count[school_index]++;
-        return school_index;
+        school_index = student->order[i];
+        if (check_school_max(school_index, school_count))
+        {
+            school_count[school_index]++;
+            return school_index;
+        }
     }
-
-    school_index = student->order[1];
-    if (check_school_max(school_index, school_count))
-    {
-        school_count[school_index]++;
-        return school_index;
-    }
-
-    school_index = student->order[2];
-    school_count[school_index]++;
-    return school_index;
 }
 
 void set_order(t_student *student)
